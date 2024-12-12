@@ -1,0 +1,47 @@
+<div id="app">
+    <svg 
+      v-bind:width="width" 
+      v-bind:height="height" 
+      v-bind:viewBox="'0 0 ' + width + ' ' + height">
+      
+      <polygon 
+        v-bind:points="trianglePoints"
+        v-bind:stroke="lineColor" 
+        v-bind:stroke-width="lineWidth" 
+        fill="none"/>
+    </svg>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        width: 640, // ширина SVG
+        height: 480, // высота SVG
+        margin: 100, // отступ от краев для треугольника
+        lineWidth: 10, // толщина линий треугольника
+        lineColor: 'green', // цвет линий треугольника
+      },
+      computed: {
+        trianglePoints() {
+          const w = this.width - 2 * this.margin; // ширина треугольника
+          const h = this.height - 2 * this.margin; // высота отступа сверху и снизу
+  
+          // Координаты вершин треугольника
+          const x1 = this.width / 2;
+          const y1 = this.margin;
+  
+          const x2 = this.margin;
+          const y2 = this.height - this.margin;
+  
+          const x3 = this.width - this.margin;
+          const y3 = this.height - this.margin;
+  
+          // Возвращаем координаты в формате "x1,y1 x2,y2 x3,y3"
+          return `${x1},${y1} ${x2},${y2} ${x3},${y3}`;
+        }
+      }
+    });
+  </script>
+  

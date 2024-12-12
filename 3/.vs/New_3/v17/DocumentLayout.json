@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\3.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:3.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\2.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:2.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\1.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:1.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\4.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:4.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "4.html",
+              "DocumentMoniker": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\4.html",
+              "RelativeDocumentMoniker": "4.html",
+              "ToolTip": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\4.html",
+              "RelativeToolTip": "4.html",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-14T12:19:56.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "3.html",
+              "DocumentMoniker": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\3.html",
+              "RelativeDocumentMoniker": "3.html",
+              "ToolTip": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\3.html",
+              "RelativeToolTip": "3.html",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAAAAAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-14T12:19:55.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "2.html",
+              "DocumentMoniker": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\2.html",
+              "RelativeDocumentMoniker": "2.html",
+              "ToolTip": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\2.html",
+              "RelativeToolTip": "2.html",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-14T12:19:52.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "1.html",
+              "DocumentMoniker": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\1.html",
+              "RelativeDocumentMoniker": "1.html",
+              "ToolTip": "C:\\Users\\Matvey\\Desktop\\UNIK\\Safronov\\New_3\\1.html",
+              "RelativeToolTip": "1.html",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-14T12:19:49.738Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

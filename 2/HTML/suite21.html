@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание №2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: auto auto auto auto;
+            grid-template-areas: 
+                "header header header"
+                "contacts skills personal"
+                "image table svg"
+                "description description description";
+            gap: 10px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            grid-area: header;
+            background-color: #e3e3e3;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .contacts, .skills, .personal, .image, .table, .svg {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .description {
+            grid-area: description;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        button, select {
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-clear {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+
+        .btn-restore {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>Макет сайта по Заданию №2</header>
+
+    <!-- Contacts List -->
+    <div class="contacts">
+        <h3>Контактная информация</h3>
+        <ol type="I">
+            <li>ФИО: Моисеенко Матвей Андреевич</li>
+            <li>Телефон: +7 926 900 95 23</li>
+            <li>Email: matveymois@yandex.ru</li>
+            <li>Социальные сети:
+                <ul>
+                    <li><a href="https://vk.com/matvey00000" target="_blank">ВКонтакте</a></li>
+                </ul>
+            </li>
+        </ol>
+        <ol type="I">
+            <li>ФИО: Земсков Никита Александрович</li>
+            <li>Телефон: +7 901 590 61 64</li>
+            <li>Email: n.zemskov2013@yandex.ru</li>
+            <li>Социальные сети:
+                <ul>
+                    <li><a href="https://vk.com/voksmezen" target="_blank">ВКонтакте</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Skills Table -->
+    <div class="skills">
+        <h3>Навыки</h3>
+        <table id="skills-table">
+            <tr>
+                <th>Категория</th>
+                <th>Подкатегория</th>
+                <th>Уровень</th>
+            </tr>
+            <tr>
+                <td><b><i>Hard Skills</i></b></td>
+                <td><i>Программирование</i></td>
+                <td>Продвинутый</td>
+            </tr>
+            <tr>
+                <td><b><i>Hard Skills</i></b></td>
+                <td><i>Веб-разработка</i></td>
+                <td>Средний</td>
+            </tr>
+            <tr>
+                <td><b><i>Soft Skills</i></b></td>
+                <td><i>Коммуникация</i></td>
+                <td>Высокий</td>
+            </tr>
+            <tr>
+                <td><b><i>Soft Skills</i></b></td>
+                <td><i>Управление временем</i></td>
+                <td>Высокий</td>
+            </tr>
+        </table>
+        <button id="clear-btn" class="btn-clear">Очистить таблицу</button>
+        <button id="restore-btn" class="btn-restore" disabled>Восстановить содержимое</button>
+    </div>
+
+    <!-- Personal Info -->
+    <div class="personal">
+        <h3>Личные данные Моисеенко Матвея</h3>
+        <select id="content-selector" onchange="updateContent()">
+            <option value="resume">Резюме</option>
+            <option value="contacts">Контакты</option>
+            <option value="portfolio">Портфолио</option>
+        </select>
+        <div id="dynamic-content">
+            <!-- Контент будет обновляться динамически -->
+        </div>
+    </div>
+
+    <!-- Image -->
+    <div class="image">
+        <h3>Фотография</h3>
+        <img src="Us.jpg" alt="Фото" width="100%">
+    </div>
+
+    <!-- Table for Categories -->
+    <div class="table">
+        <h3>Таблица с категориями</h3>
+        <table id="categories-table">
+            <tr>
+                <th>Категория</th>
+                <th>Элементы</th>
+                <th>Описание</th>
+            </tr>
+            <tr>
+                <td><b>Категория 1</b></td>
+                <td>Элемент 1, Элемент 2</td>
+                <td>Описание элементов первой категории.</td>
+            </tr>
+            <tr>
+                <td><b>Категория 2</b></td>
+                <td>Элемент 3, Элемент 4</td>
+                <td>Описание элементов второй категории.</td>
+            </tr>
+            <tr>
+                <td><b>Категория 3</b></td>
+                <td>Элемент 5, Элемент 6</td>
+                <td>Описание элементов третьей категории.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SVG Section -->
+    <div class="svg">
+        <h3>Векторная графика</h3>
+        <svg width="100%" height="200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+                </linearGradient>
+                <radialGradient id="grad2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" style="stop-color:rgb(0,255,255);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+                </radialGradient>
+            </defs>
+            <circle cx="30%" cy="50%" r="60" fill="url(#grad1)" stroke="black" stroke-width="2" />
+            <ellipse cx="70%" cy="50%" rx="50" ry="30" fill="url(#grad2)" stroke="black" stroke-width="2" />
+            <line x1="10%" y1="10%" x2="90%" y2="90%" stroke="green" stroke-width="2" />
+            <rect x="45%" y="80" width="100" height="40" fill="orange" stroke="black" stroke-width="2" />
+        </svg>
+    </div>
+
+    <!-- Description -->
+    <div class="description">
+        <h3>Дополнительная информация</h3>
+        <p>Здравствуйте! Меня зовут Земсков Никита, и я профессиональный веб-разработчик...</p>
+    </div>
+
+    <script>
+        // Обновление контента в разделе Personal Info
+        function updateContent() {
+            const selectedValue = document.getElementById('content-selector').value;
+            const contentDiv = document.getElementById('dynamic-content');
+
+            if (selectedValue === 'resume') {
+                contentDiv.innerHTML = `
+                    <p><strong>Резюме:</strong></p>
+                    <p>Являюсь профессиональным веб-разработчиком с более чем 10-летним опытом. Основные навыки включают разработку фронтенда, бэкенда, работу с базами данных и управление проектами.</p>
+                `;
+            } else if (selectedValue === 'contacts') {
+                contentDiv.innerHTML = `
+                    <p><strong>Контакты:</strong></p>
+                    <p>Телефон: +7 926 900 95 23</p>
+                    <p>Email: matveymois@yandex.ru</p>
+                `;
+            } else if (selectedValue === 'portfolio') {
+                contentDiv.innerHTML = `
+                    <p><strong>Портфолио:</strong></p>
+                    <ul>
+                        <li>Проект 1: Корпоративный портал для крупной компании</li>
+                        <li>Проект 2: Интернет-магазин с уникальным дизайном</li>
+                        <li>Проект 3: Личный блог с интеграцией социальных сетей</li>
+                    </ul>
+                `;
+            }
+        }
+
+        // Устанавливаем начальный контент
+        updateContent();
+
+        // Очистка и восстановление содержимого таблиц
+        const clearBtn = document.getElementById('clear-btn');
+        const restoreBtn = document.getElementById('restore-btn');
+        const skillsTable = document.getElementById('skills-table');
+        const categoriesTable = document.getElementById('categories-table');
+
+        const originalSkillsContent = Array.from(skillsTable.rows).map(row => Array.from(row.cells).map(cell => cell.innerHTML));
+        const originalCategoriesContent = Array.from(categoriesTable.rows).map(row => Array.from(row.cells).map(cell => cell.innerHTML));
+
+        clearBtn.addEventListener('click', () => {
+            [skillsTable, categoriesTable].forEach(table => {
+                Array.from(table.rows).forEach(row => {
+                    Array.from(row.cells).forEach(cell => (cell.innerHTML = ''));
+                });
+            });
+            clearBtn.disabled = true;
+            restoreBtn.disabled = false;
+        });
+
+        restoreBtn.addEventListener('click', () => {
+            [skillsTable, categoriesTable].forEach((table, index) => {
+                const content = index === 0 ? originalSkillsContent : originalCategoriesContent;
+                Array.from(table.rows).forEach((row, rowIndex) => {
+                    Array.from(row.cells).forEach((cell, cellIndex) => {
+                        cell.innerHTML = content[rowIndex][cellIndex];
+                    });
+                });
+            });
+            clearBtn.disabled = false;
+            restoreBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

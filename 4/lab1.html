@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Демонстрация жизненного цикла Vue.js 3.x с дополнительными методами</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .hook-log {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .messages {
+            margin-top: 20px;
+        }
+        .message {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .message:last-child {
+            border-bottom: none;
+        }
+        button {
+            margin-right: 5px;
+            padding: 5px 10px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .edit-input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Демонстрация жизненного цикла Vue.js 3.x с дополнительными методами</h1>
+        
+        <div class="hook-log">
+            <h2>События жизненного цикла:</h2>
+            <ul>
+                <li>beforeCreate: {{ logs.beforeCreate }}</li>
+                <li>created: {{ logs.created }}</li>
+                <li>beforeMount: {{ logs.beforeMount }}</li>
+                <li>mounted: {{ logs.mounted }}</li>
+                <li>beforeUpdate: {{ logs.beforeUpdate }}</li>
+                <li>updated: {{ logs.updated }}</li>
+            </ul>
+        </div>
+
+        <div class="messages">
+            <h2>Сообщения:</h2>
+            <div class="message">
+                <span>{{ messages[0] }}</span>
+                <button @click="changeMessage(0)">Изменить</button>
+            </div>
+            <div class="message">
+                <span>{{ messages[1] }}</span>
+                <button @click="changeMessage(1)">Изменить</button>
+            </div>
+            <div class="message">
+                <span>{{ messages[2] }}</span>
+                <button @click="changeMessage(2)">Изменить</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button @click="addMessage">Добавить сообщение</button>
+            <button @click="removeMessage">Удалить сообщение</button>
+            <button @click="unmountApp">Размонтировать приложение</button>
+        </div>
+
+        <div v-if="isEditing" class="edit-input">
+            <h3>Изменить сообщение "{{ editingMessage }}"</h3>
+            <input v-model="newMessageText" placeholder="Новое сообщение" />
+            <button @click="confirmChangeMessage">Подтвердить</button>
+            <button @click="cancelChangeMessage">Отмена</button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        const app = createApp({
+            data() {
+                return {
+                    logs: {
+                        beforeCreate: 'Не выполнено',
+                        created: 'Не выполнено',
+                        beforeMount: 'Не выполнено',
+                        mounted: 'Не выполнено',
+                        beforeUpdate: 'Не выполнено',
+                        updated: 'Не выполнено'
+                    },
+                    messages: ['Сообщение 1', 'Сообщение 2', 'Сообщение 3'],
+                    isEditing: false,
+                    editingIndex: null,
+                    newMessageText: ''
+                }
+            },
+            methods: {
+                addMessage() {
+                    const newMessage = `Сообщение ${this.messages.length + 1}`;
+                    if (this.messages.length < 3) {
+                        this.messages.push(newMessage);
+                        console.log(`Добавлено: ${newMessage}`);
+                    } else {
+                        alert('Максимум три сообщения.');
+                    }
+                },
+                removeMessage() {
+                    if (this.messages.length > 0) {
+                        const removed = this.messages.pop();
+                        console.log(`Удалено: ${removed}`);
+                    } else {
+                        console.log('Нет сообщений для удаления.');
+                    }
+                },
+                changeMessage(index) {
+                    this.editingIndex = index;
+                    this.newMessageText = this.messages[index];
+                    this.isEditing = true;
+                    console.log(`Редактирование сообщения ${index + 1}`);
+                },
+                confirmChangeMessage() {
+                    if (this.newMessageText.trim() !== '') {
+                        const oldMessage = this.messages[this.editingIndex];
+                        this.messages[this.editingIndex] = this.newMessageText.trim();
+                        console.log(`Сообщение ${this.editingIndex + 1} изменено с "${oldMessage}" на "${this.newMessageText.trim()}"`);
+                        this.isEditing = false;
+                        this.editingIndex = null;
+                        this.newMessageText = '';
+                    } else {
+                        alert('Текст сообщения не может быть пустым.');
+                    }
+                },
+                cancelChangeMessage() {
+                    this.isEditing = false;
+                    this.editingIndex = null;
+                    this.newMessageText = '';
+                    console.log('Редактирование сообщения отменено.');
+                },
+                unmountApp() {
+                    app.unmount();
+                    console.log('Приложение размонтировано.');
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

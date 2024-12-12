@@ -1,0 +1,199 @@
+<div id="app">
+    <!-- Радиокнопки для управления светофором -->
+    <div>
+      <label>
+        <input type="radio" v-model="mode" value="on"> Включён
+      </label>
+      <label>
+        <input type="radio" v-model="mode" value="paused"> Приостановлен
+      </label>
+      <label>
+        <input type="radio" v-model="mode" value="off"> Выключен
+      </label>
+    </div>
+  
+    <!-- Настройки времени для светофора -->
+    <details>
+      <summary>Настройки времени</summary>
+      <div>
+        <label>Время зелёного сигнала (сек):</label>
+        <input type="number" v-model="greenTime" min="5">
+      </div>
+      <div>
+        <label>Время красного сигнала (сек):</label>
+        <input type="number" v-model="redTime" min="5">
+      </div>
+      <div>
+        <label>Время мерцания жёлтого сигнала (сек):</label>
+        <input type="number" v-model="yellowBlinkTime" min="1">
+      </div>
+    </details>
+  
+    <!-- Светофор -->
+    <div class="traffic-light">
+      <div v-if="mode === 'on'">
+        <!-- Зелёный сигнал -->
+        <div class="light green" v-if="currentLight === 'green'">
+          Зелёный ({{ greenCounter }}) сек
+        </div>
+  
+        <!-- Жёлтый сигнал -->
+        <div class="light yellow" v-if="currentLight === 'yellow'">
+          Жёлтый
+        </div>
+  
+        <!-- Красный сигнал -->
+        <div class="light red" v-if="currentLight === 'red'">
+          Красный ({{ redCounter }}) сек
+        </div>
+      </div>
+  
+      <!-- Приостановлен: мигание жёлтого сигнала -->
+      <div v-if="mode === 'paused'">
+        <div class="light yellow" :class="{ blinking: isYellowBlinking }">
+          Жёлтый (мигает)
+        </div>
+      </div>
+  
+      <!-- Выключен: все сигналы отключены -->
+      <div v-if="mode === 'off'">
+        <p>Светофор выключен</p>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        // Состояние светофора
+        mode: 'off', // 'on', 'paused', 'off'
+        
+        // Настройки времени
+        greenTime: 10,   // Время зелёного сигнала
+        redTime: 10,     // Время красного сигнала
+        yellowBlinkTime: 2,  // Время мерцания жёлтого сигнала
+        
+        // Внутренние переменные для отслеживания текущего состояния светофора
+        currentLight: 'green',   // Текущий сигнал ('green', 'yellow', 'red')
+        greenCounter: 10,        // Таймер обратного отсчёта для зелёного сигнала
+        redCounter: 10,          // Таймер обратного отсчёта для красного сигнала
+        isYellowBlinking: false, // Флаг для мигания жёлтого сигнала
+      },
+      mounted() {
+        this.startTrafficLight();
+      },
+      watch: {
+        // Перезапуск светофора при изменении режима
+        mode(newVal) {
+          if (newVal === 'on') {
+            this.startTrafficLight();
+          } else if (newVal === 'paused') {
+            this.startYellowBlinking();
+          } else {
+            this.stopTrafficLight();
+          }
+        },
+        // Перезапуск светофора при изменении времени
+        greenTime(newVal) {
+          this.greenCounter = newVal;
+        },
+        redTime(newVal) {
+          this.redCounter = newVal;
+        }
+      },
+      methods: {
+        // Запуск работы светофора
+        startTrafficLight() {
+          this.stopYellowBlinking();
+          this.currentLight = 'green';
+          this.greenCounter = this.greenTime;
+          this.switchLights();
+        },
+        
+        // Переключение сигналов светофора
+        switchLights() {
+          if (this.mode !== 'on') return;
+  
+          if (this.currentLight === 'green') {
+            this.greenCounter--;
+            if (this.greenCounter <= 0) {
+              this.currentLight = 'yellow';
+              setTimeout(() => {
+                this.currentLight = 'red';
+                this.redCounter = this.redTime;
+                this.switchLights();
+              }, 2000); // Жёлтый горит 2 секунды
+            } else {
+              setTimeout(this.switchLights, 1000);
+            }
+          } else if (this.currentLight === 'red') {
+            this.redCounter--;
+            if (this.redCounter <= 0) {
+              this.currentLight = 'green';
+              this.greenCounter = this.greenTime;
+              this.switchLights();
+            } else {
+              setTimeout(this.switchLights, 1000);
+            }
+          }
+        },
+  
+        // Мигание жёлтого сигнала в режиме "Приостановлен"
+        startYellowBlinking() {
+          this.isYellowBlinking = true;
+          setInterval(() => {
+            this.isYellowBlinking = !this.isYellowBlinking;
+          }, this.yellowBlinkTime * 1000);
+        },
+  
+        // Остановка работы светофора
+        stopTrafficLight() {
+          this.stopYellowBlinking();
+        },
+  
+        // Остановка мигания жёлтого сигнала
+        stopYellowBlinking() {
+          clearInterval(this.yellowBlinkInterval);
+          this.isYellowBlinking = false;
+        }
+      }
+    });
+  </script>
+  
+  <style>
+  .traffic-light {
+    width: 100px;
+    text-align: center;
+  }
+  .light {
+    width: 100%;
+    height: 100px;
+    margin: 10px 0;
+    line-height: 100px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    border-radius: 50%;
+  }
+  .green {
+    background-color: green;
+  }
+  .yellow {
+    background-color: yellow;
+    color: black;
+  }
+  .red {
+    background-color: red;
+  }
+  .blinking {
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  </style>

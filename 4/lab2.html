@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Координатная Ось</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+        svg {
+            border: 1px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="controls">
+            <label>
+                Шаг засечек:
+                <input type="range" v-model="step" min="20" max="100">
+                {{ step }} px
+            </label>
+            <br>
+            <label>
+                Начало диапазона:
+                <input type="number" v-model.number="rangeStart">
+            </label>
+            <label>
+                Конец диапазона:
+                <input type="number" v-model.number="rangeEnd">
+            </label>
+            <br>
+            <label>
+                Направление стрелки:
+                <input type="checkbox" v-model="invertDirection"> Снизу вверх
+            </label>
+        </div>
+        <svg :width="svgWidth" :height="svgHeight">
+            <!-- Ось -->
+            <line :x1="centerX" :y1="margin" :x2="centerX" :y2="svgHeight - margin" stroke="black" stroke-width="2"></line>
+            <!-- Стрелка -->
+            <line
+                :x1="centerX"
+                :y1="arrowHeadY1"
+                :x2="centerX - 10"
+                :y2="arrowHeadY2"
+                stroke="black" stroke-width="2"></line>
+            <line
+                :x1="centerX"
+                :y1="arrowHeadY1"
+                :x2="centerX + 10"
+                :y2="arrowHeadY2"
+                stroke="black" stroke-width="2"></line>
+            <!-- Засечки -->
+            <line v-for="(y, index) in majorTicks" :key="index" :x1="centerX - 10" :y1="y" :x2="centerX + 10" :y2="y" stroke="black" stroke-width="1"></line>
+            <!-- Промежуточные засечки -->
+            <line v-for="(y, index) in minorTicks" :key="'minor-' + index" :x1="centerX - 5" :y1="y" :x2="centerX + 5" :y2="y" stroke="black" stroke-width="1"></line>
+            <!-- Числовые метки -->
+            <text v-for="(label, index) in labels" :key="'label-' + index" :x="centerX + 15" :y="label.y" font-size="12" fill="black">
+                {{ label.value }}
+            </text>
+        </svg>
+    </div>
+
+    <script>
+       const app = Vue.createApp({
+    data() {
+        return {
+            svgWidth: 540,
+            svgHeight: 960,
+            margin: 50,
+            step: 50, // Шаг между засечками
+            rangeStart: -10,
+            rangeEnd: 10,
+            invertDirection: false, // Направление стрелки
+        };
+    },
+    computed: {
+        centerX() {
+            return this.svgWidth / 2;
+        },
+        majorTicks() {
+            const ticks = [];
+            const startY = this.margin;
+            const endY = this.svgHeight - this.margin;
+            const totalHeight = endY - startY;
+
+            // Общее количество шагов
+            const numSteps = Math.floor(totalHeight / this.step);
+
+            for (let i = 0; i <= numSteps; i++) {
+                const y = this.invertDirection
+                    ? endY - i * this.step
+                    : startY + i * this.step;
+                ticks.push(y);
+            }
+
+            return ticks;
+        },
+        minorTicks() {
+            const ticks = [];
+            for (let i = 0; i < this.majorTicks.length - 1; i++) {
+                const midY = (this.majorTicks[i] + this.majorTicks[i + 1]) / 2;
+                ticks.push(midY);
+            }
+            return ticks;
+        },
+        labels() {
+            const labels = [];
+            const totalLabels = this.majorTicks.length;
+            const rangeStep = (this.rangeEnd - this.rangeStart) / (totalLabels - 1 || 1);
+
+            for (let i = 0; i < totalLabels; i++) {
+                const currentValue = this.invertDirection
+                    ? this.rangeEnd - i * rangeStep
+                    : this.rangeStart + i * rangeStep;
+                labels.push({
+                    y: this.majorTicks[i] + 5,
+                    value: currentValue.toFixed(1),
+                });
+            }
+
+            return labels;
+        },
+        arrowHeadY1() {
+            return this.invertDirection ? this.margin : this.svgHeight - this.margin;
+        },
+        arrowHeadY2() {
+            return this.invertDirection ? this.margin + 10 : this.svgHeight - this.margin - 10;
+        },
+    },
+});
+
+app.mount("#app");
+
+
+    </script>
+</body>
+</html>

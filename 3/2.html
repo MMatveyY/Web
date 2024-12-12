@@ -1,0 +1,59 @@
+<div id="app">
+  <!-- Кнопки, которые вызывают методы через события нажатия (v-on:click) -->
+  <div>
+    <button v-on:click="changeFontFamily">Изменить семейство шрифта</button>
+    <button v-on:click="changeFontSize">Изменить размер шрифта</button>
+    <button v-on:click="changeFontColor">Изменить цвет шрифта</button>
+  </div>
+  
+  <!-- Тег <font> с параметрически меняемыми атрибутами через методы -->
+  <font 
+    v-bind:face="fontFamily" 
+    v-bind:size="fontSize" 
+    v-bind:color="fontColor">
+    Пример текста с параметрическими изменениями шрифта.
+  </font>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      // Инициализация параметров шрифта
+      fontFamily: 'Courier New',  // Начальное семейство шрифта
+      fontSize: 3,                // Начальный размер шрифта
+      fontColor: 'red',           // Начальный цвет шрифта
+      
+      // Варианты значений для циклической смены
+      fontFamilies: ['Courier New', 'Book Antiqua', 'Tahoma'],  // Семейства шрифтов
+      fontSizes: [1, 2, 3, 4, 5, 6],                           // Размеры шрифта
+      fontColors: ['red', 'green', 'blue'],                    // Цвета шрифта
+      
+      // Индексы для отслеживания текущего состояния циклических параметров
+      currentFontFamilyIndex: 0,   // Текущий индекс семейства шрифта
+      currentFontSizeIndex: 2,     // Текущий индекс размера шрифта (по умолчанию 3)
+      currentFontColorIndex: 0,    // Текущий индекс цвета шрифта
+    },
+    methods: {
+      // Метод изменения семейства шрифта
+      changeFontFamily() {
+        // Циклическое переключение индекса семейства шрифта
+        this.currentFontFamilyIndex = (this.currentFontFamilyIndex + 1) % this.fontFamilies.length;
+        this.fontFamily = this.fontFamilies[this.currentFontFamilyIndex];  // Обновляем семейство шрифта
+      },
+      // Метод изменения размера шрифта
+      changeFontSize() {
+        // Циклическое переключение индекса размера шрифта
+        this.currentFontSizeIndex = (this.currentFontSizeIndex + 1) % this.fontSizes.length;
+        this.fontSize = this.fontSizes[this.currentFontSizeIndex];  // Обновляем размер шрифта
+      },
+      // Метод изменения цвета шрифта
+      changeFontColor() {
+        // Циклическое переключение индекса цвета шрифта
+        this.currentFontColorIndex = (this.currentFontColorIndex + 1) % this.fontColors.length;
+        this.fontColor = this.fontColors[this.currentFontColorIndex];  // Обновляем цвет шрифта
+      }
+    }
+  });
+</script>

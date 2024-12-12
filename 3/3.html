@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Test</title>
+    <!-- Подключение Vue.js -->
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-for="(question, index) in questions" :key="index">
+            <p>{{ index + 1 }}. {{ question.text }}</p>
+
+            <div v-for="(option, optIndex) in question.options" :key="optIndex">
+                <input type="checkbox"
+                       :name="'question-' + index"
+                       :disabled="isSubmitted"
+                       :checked="selectedAnswers[index] === optIndex"
+                       @change="toggleCheckbox(index, optIndex)">
+                <label>{{ option }}</label>
+            </div>
+        </div>
+
+        <button @click="submitTest" :disabled="isSubmitted">Завершить</button>
+
+        <p v-if="isSubmitted">Ваш результат: {{ score }}%</p>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    questions: [
+                        {
+                            text: 'Какого цвета небо?',
+                            options: ['Синее', 'Зелёное', 'Красное'],
+                            correctAnswer: 0
+                        },
+                        {
+                            text: 'Сколько дней в неделе?',
+                            options: ['5', '6', '7'],
+                            correctAnswer: 2
+                        },
+                        {
+                            text: 'Как называется столица Франции?',
+                            options: ['Берлин', 'Париж', 'Рим'],
+                            correctAnswer: 1
+                        },
+                        {
+                            text: 'Какое животное является символом России?',
+                            options: ['Лев', 'Медведь', 'Тигр'],
+                            correctAnswer: 1
+                        },
+                        {
+                            text: 'Какой самый большой океан на Земле?',
+                            options: ['Атлантический', 'Индийский', 'Тихий'],
+                            correctAnswer: 2
+                        },
+                        {
+                            text: 'Сколько планет в Солнечной системе?',
+                            options: ['7', '8', '9'],
+                            correctAnswer: 1
+                        },
+                        {
+                            text: 'Какой химический элемент обозначается символом O?',
+                            options: ['Кислород', 'Водород', 'Углерод'],
+                            correctAnswer: 0
+                        },
+                        {
+                            text: 'Как называется самая высокая гора в мире?',
+                            options: ['Эверест', 'Килиманджаро', 'Монблан'],
+                            correctAnswer: 0
+                        },
+                        {
+                            text: 'Какой самый маленький континент?',
+                            options: ['Европа', 'Австралия', 'Африка'],
+                            correctAnswer: 1
+                        },
+                        {
+                            text: 'Сколько градусов в прямом угле?',
+                            options: ['90', '180', '360'],
+                            correctAnswer: 0
+                        }
+                    ],
+                    selectedAnswers: Array(10).fill(null),
+                    isSubmitted: false,
+                    score: 0
+                };
+            },
+            methods: {
+                toggleCheckbox(questionIndex, optionIndex) {
+                    // Снимаем выбор, если уже был выбран этот ответ
+                    if (this.selectedAnswers[questionIndex] === optionIndex) {
+                        this.selectedAnswers[questionIndex] = null;
+                    } else {
+                        // Обеспечиваем выбор только одного флажка
+                        this.selectedAnswers[questionIndex] = optionIndex;
+                    }
+                },
+                submitTest() {
+                    if (this.selectedAnswers.includes(null)) {
+                        alert("Пожалуйста, ответьте на все вопросы.");
+                        return;
+                    }
+                    this.isSubmitted = true;
+                    this.calculateScore();
+                },
+                calculateScore() {
+                    let correctAnswersCount = 0;
+                    this.questions.forEach((question, index) => {
+                        if (this.selectedAnswers[index] === question.correctAnswer) {
+                            correctAnswersCount++;
+                        }
+                    });
+                    this.score = Math.round((correctAnswersCount / this.questions.length) * 100);
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

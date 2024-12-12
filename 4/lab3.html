@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор с наблюдателями</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Калькулятор</h1>
+        <p>Введите текст, содержащий конструкции вида: <code>Sin(x)</code>, <code>Cos(x)</code>, <code>Tg(x)</code>, <code>Ctg(x)</code>, <code>pi</code>.</p>
+        <input type="text" v-model="inputText" placeholder="Введите текст">
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    inputText: "", // Текст в <input>
+                };
+            },
+            watch: {
+                inputText(value) {
+                    // Наблюдатель за изменением текста
+                    this.inputText = this.calculate(value);
+                },
+            },
+            methods: {
+                calculate(text) {
+                    // Замены для константы и функций
+                    try {
+                        // Обработка π
+                        text = text.replace(/pi/gi, Math.PI.toFixed(5));
+                        
+                        // Обработка Sin(x)
+                        text = text.replace(/Sin\((-?\d+\.?\d*)\)/gi, (match, x) => {
+                            return Math.sin(parseFloat(x)).toFixed(5);
+                        });
+
+                        // Обработка Cos(x)
+                        text = text.replace(/Cos\((-?\d+\.?\d*)\)/gi, (match, x) => {
+                            return Math.cos(parseFloat(x)).toFixed(5);
+                        });
+
+                        // Обработка Tg(x)
+                        text = text.replace(/Tg\((-?\d+\.?\d*)\)/gi, (match, x) => {
+                            return Math.tan(parseFloat(x)).toFixed(5);
+                        });
+
+                        // Обработка Ctg(x)
+                        text = text.replace(/Ctg\((-?\d+\.?\d*)\)/gi, (match, x) => {
+                            const value = 1 / Math.tan(parseFloat(x));
+                            return value.toFixed(5);
+                        });
+                    } catch (error) {
+                        console.error("Ошибка при обработке выражения:", error);
+                    }
+                    return text;
+                },
+            },
+        });
+
+        app.mount("#app");
+    </script>
+</body>
+</html>
