@@ -111,6 +111,9 @@ export default {
           this.drawChannel(this.histogramData[channel], color, maxValue, ctx, canvas);
         });
       }
+
+      // Добавляем направляющую яркости в верхней части гистограммы
+      this.drawGradientLine(ctx, canvas);
     },
     drawChannel(data, color, maxValue, ctx, canvas) {
       ctx.fillStyle = color;
@@ -119,6 +122,20 @@ export default {
         ctx.fillRect(i, canvas.height - height, 1, height);
       });
     },
+    drawGradientLine(ctx, canvas) {
+      // Создаем градиент от черного к белому
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      gradient.addColorStop(0, 'black');
+      gradient.addColorStop(1, 'white');
+
+      // Рисуем горизонтальную линию градиента в верхней части холста
+      ctx.beginPath();
+      ctx.moveTo(0, 0); // Начало линии в верхнем левом углу
+      ctx.lineTo(canvas.width, 0); // Конец линии в верхнем правом углу
+      ctx.strokeStyle = gradient; // Устанавливаем градиент как стиль линии
+      ctx.lineWidth = 10; // Увеличиваем толщину линии для лучшей видимости
+      ctx.stroke();
+    }
   },
 };
 </script>
